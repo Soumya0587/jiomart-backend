@@ -14,6 +14,23 @@ GroceryRouter.get("/all",async(req,res)=>{
   }
 })
 
+// get by grocery product by ID
+
+
+GroceryRouter.get("/:id", async (req, res) => {
+  try {
+    const data = await GroceryModel.findById(req.params.id);
+    if (data) {
+      res.send(data);
+    } else {
+      res.send("Data not found");
+    }
+    res.send(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 // for search request parameter
 
 
@@ -57,5 +74,31 @@ GroceryRouter.post("/create", async (req, res) => {
     res.send({ msg: "Something went wrong", error: err.message });
   }
 });
+
+
+// for admin only
+// update data
+
+GroceryRouter.patch("/:id", async (req, res) => {
+  try {
+    const data = await GroceryModel.findByIdAndUpdate(req.params.id, req.body);
+    res.send("update success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// delete data
+
+GroceryRouter.delete("/:id", async (req, res) => {
+  try {
+    const data = await GroceryModel.findByIdAndDelete(req.params.id);
+    res.send("delete success");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 
 module.exports = { GroceryRouter };
