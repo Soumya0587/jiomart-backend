@@ -25,7 +25,7 @@ GroceryRouter.get("/:id", async (req, res) => {
     } else {
       res.send("Data not found");
     }
-    res.send(data);
+    
   } catch (error) {
     console.log(error);
   }
@@ -33,29 +33,51 @@ GroceryRouter.get("/:id", async (req, res) => {
 
 // for search request parameter
 
+GroceryRouter.get("/", async(req, res) => {
 
-GroceryRouter.get("/search", async (req, res) => {
-  const { q } = req.query;
-  console.log(q);
-  const category = {};
-  const product_name ={}
-  const brand = {};
-  const sub_category = {};
-  if (q) {
-    category.category = new RegExp(q, "i");
-    brand.brand = new RegExp(q, "i");
-    sub_category.sub_category = new RegExp(q, "i");
-    product_name.product_name = new RegExp(q, "i");
+  const {category,brand,sub_category,sort}=req.query
+  const queryObject = {}
 
+  if(category){
+    queryObject.category={ $regex : category, $options : "i"}
   }
-  const query = { $or: [category,product_name, brand, sub_category] };
-  try {
-    const data = await GroceryModel.find(query);
+  if(brand){
+    queryObject.brand={ $regex : brand, $options : "i"}
+  }
+  if(sub_category){
+    queryObject.sub_category={ $regex : sub_category, $options : "i"}
+  }
+  let apiData = GroceryModel.find(queryObject)
+  if(sort){
+    let sortFix = sort.replace(","," ")
+    apiData = apiData.sort(sortFix)
+  }
+console.log(queryObject);
+const myData = await apiData
+res.send(myData)
+
+  // const { q } = req.query;
+  
+  // const category = {};
+  // const product_name ={}
+  // const brand = {};
+  // const sub_category = {};
+  // if (q) {
+  //   console.log("q:"+q);
+  //   category.category = new RegExp(q, "i");
+  //   brand.brand = new RegExp(q, "i");
+  //   sub_category.sub_category = new RegExp(q, "i");
+  //   product_name.product_name = new RegExp(q, "i");
+
+  // }
+  // const query = { $or: [category,product_name, brand, sub_category] };
+  // try {
+  //   const data = await GroceryModel.find(query);
     
-    res.send(data);
-  } catch (error) {
-    console.log(error);
-  }
+  //   res.send(data);
+  // } catch (error) {
+  //   console.log(error);
+  // }
 });
 
 
