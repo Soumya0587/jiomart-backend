@@ -49,11 +49,11 @@ GroceryRouter.get("/", async(req, res) => {
   }
   let apiData = GroceryModel.find(queryObject)
   if(sort){
-    let sortFix = sort.replace(","," ")
+    let sortFix = sort.split(",").join(" ")
     apiData = apiData.sort(sortFix)
   }
   if(select){
-    let selectFix = select.replace(","," ")
+    let selectFix = select.split(",").join(" ")
     apiData = apiData.select(selectFix)
   }
 
