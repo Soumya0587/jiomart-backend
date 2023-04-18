@@ -35,7 +35,7 @@ GroceryRouter.get("/:id", async (req, res) => {
 
 GroceryRouter.get("/", async(req, res) => {
 
-  const {category,brand,sub_category,sort}=req.query
+  const {category,brand,sub_category,sort,select}=req.query
   const queryObject = {}
 
   if(category){
@@ -52,6 +52,12 @@ GroceryRouter.get("/", async(req, res) => {
     let sortFix = sort.replace(","," ")
     apiData = apiData.sort(sortFix)
   }
+  if(select){
+    let selectFix = select.replace(","," ")
+    apiData = apiData.select(selectFix)
+  }
+
+
 console.log(queryObject);
 const myData = await apiData
 res.send(myData)
