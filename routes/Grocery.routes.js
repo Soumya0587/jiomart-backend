@@ -35,35 +35,38 @@ GroceryRouter.get("/:id", async (req, res) => {
 
 GroceryRouter.get("/", async(req, res) => {
 
-  const {category,sub_category,brand,sortBy,select,page,limit,c_value}=req.query
-  const queryObject = {}
+  let {category,sub_category,brand,sortBy,select,page,limit,c_value}=req.query
+  let queryObject = {}
   
   
-  const category_tree = {}
-  const sub_category_tree = {};
+  let category_tree = {}
+  let sub_category_tree = {};
   if (c_value) {
     console.log("q:"+c_value);
     category_tree.category = new RegExp(c_value, "i");
     sub_category_tree.sub_category = new RegExp(c_value, "i");
 
   }
-  const newquery = { $or: [category_tree, sub_category_tree] };
+  queryObject = { $or: [category_tree, sub_category_tree] };
   if(category){
     queryObject.category={ $regex : category, $options : "i"}
   }
  
-  if(brand){
-    queryObject.brand={ $regex : brand, $options : "i"}
+  // if(brand){
+  //   queryObject.brand={ $regex : brand, $options : "i"}
+  // }
+  if (brand) {
+    queryObject.brand = { $in: brand };
   }
   if(sub_category){
     queryObject.sub_category={ $regex : sub_category, $options : "i"}
   }
   let apiData 
-  if(c_value){
-    apiData=GroceryModel.find(newquery)
-  }else{
+  // if(c_value){
+    // apiData=GroceryModel.find(newquery)
+  // }else{
     apiData=GroceryModel.find(queryObject)
-  }
+  // }
    
   // if(sort){
   //   let sortFix = sort.split(",").join(" ")
@@ -73,19 +76,21 @@ GroceryRouter.get("/", async(req, res) => {
     let selectFix = select.split(",").join(" ")
     apiData = apiData.select(selectFix)
   }
-  const sort = {};
+  let sort = {};
   if (sortBy) {
     sort["discounted_price"] = sortBy === "asc" ? 1 : "dsc" ? -1 : "" || 1;
   }
 
-  const pageNumber = page || 1;
-  const pageLimit = limit || 20;
-  const pagination = pageNumber * pageLimit - pageLimit || 0;
+  let pageNumber = page || 1;
+  let pageLimit = limit || 20;
+  let pagination = pageNumber * pageLimit - pageLimit || 0;
 console.log(queryObject);
-// const myData = await apiData
+// console.log(newquery);
+
+// let myData = await apiData
 // res.send(myData)
 try {
-  const data = await apiData
+  let data = await apiData
     .sort(sort)
     .skip(pagination)
     .limit(pageLimit);
@@ -97,7 +102,7 @@ try {
 } catch (error) {
   console.log(error);
 }
-  // const { q } = req.query;
+  // let { q } = req.query;
   
   // const category = {};
   // const product_name ={}
