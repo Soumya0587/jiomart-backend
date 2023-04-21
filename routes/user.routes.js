@@ -52,6 +52,7 @@ UserRouter.post("/login",async(req,res)=>{
             email:user[0].email,
            gender:user[0].gender,
            role:user[0]?.role,
+           userId:user[0]?._id,
            token: jwt.sign({ userId: user[0]._id }, "soumalya")
         }
         ,

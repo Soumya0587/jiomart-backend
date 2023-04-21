@@ -82,7 +82,7 @@ GroceryRouter.get("/", async(req, res) => {
   }
 
   let pageNumber = page || 1;
-  let pageLimit = limit || 20;
+  let pageLimit = limit || 30;
   let pagination = pageNumber * pageLimit - pageLimit || 0;
 console.log(queryObject);
 // console.log(newquery);

@@ -3,6 +3,8 @@ const cors = require("cors");
 const { connection } = require("./config/db");
 const {GroceryRouter} = require("./routes/Grocery.routes")
 const {UserRouter} = require("./routes/user.routes")
+const {CartRouter} = require("./routes/cart.routes")
+
 // const fileupload = require("express-fileupload");
 const { ClothingRouter } = require("./routes/clothing.routes");
 const app = express()
@@ -21,6 +23,8 @@ app.get("/", (req, res) => {
 app.use("/users",UserRouter)
 app.use("/grocery", GroceryRouter);
 app.use("/clothing", ClothingRouter);
+app.use("/users/cart", CartRouter);
+
 
 // app.use(fileupload({
 //   useTempFiles:true
