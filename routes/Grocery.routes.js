@@ -41,13 +41,15 @@ GroceryRouter.get("/", async(req, res) => {
   
   let category_tree = {}
   let sub_category_tree = {};
+  let product_name_tree={}
   if (c_value) {
     console.log("q:"+c_value);
     category_tree.category = new RegExp(c_value, "i");
     sub_category_tree.sub_category = new RegExp(c_value, "i");
+    product_name_tree.product_name = new RegExp(c_value, "i");
 
   }
-  queryObject = { $or: [category_tree, sub_category_tree] };
+  queryObject = { $or: [category_tree, sub_category_tree, product_name_tree] };
   if(category){
     queryObject.category={ $regex : category, $options : "i"}
   }
@@ -126,7 +128,7 @@ try {
   // }
 });
 
-GroceryRouter.get("/", async(req, res) => {
+GroceryRouter.get("/all", async(req, res) => {
   const { q } = req.query;
   
   const category = {}

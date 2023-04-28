@@ -4,7 +4,8 @@ const { connection } = require("./config/db");
 const {GroceryRouter} = require("./routes/Grocery.routes")
 const {UserRouter} = require("./routes/user.routes")
 const {CartRouter} = require("./routes/cart.routes")
-
+const {AddressRouter} = require("./routes/Address.routes")
+const {OrderRouter} = require("./routes/order.routes")
 // const fileupload = require("express-fileupload");
 const { ClothingRouter } = require("./routes/clothing.routes");
 const app = express()
@@ -24,7 +25,8 @@ app.use("/users",UserRouter)
 app.use("/grocery", GroceryRouter);
 app.use("/clothing", ClothingRouter);
 app.use("/users/cart", CartRouter);
-
+app.use("/address",AddressRouter)
+app.use("/order",OrderRouter)
 
 // app.use(fileupload({
 //   useTempFiles:true
