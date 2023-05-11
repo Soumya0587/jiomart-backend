@@ -61,8 +61,9 @@ CartRouter.get("/:userid",async(req,res)=>{
         res.send(error.message)
     }
   });
-  CartRouter.delete("/delete/all", async (req, res) => {
-    const { userId, _id } = req.body;
+  CartRouter.delete("/delete/all/:userid", async (req, res) => {
+    const userId = req.params.userid;
+    
     try {
         await CartModel.deleteMany({userId})
         res.send("All Items Deleted Successfully")

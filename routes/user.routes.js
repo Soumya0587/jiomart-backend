@@ -62,7 +62,15 @@ UserRouter.post("/login",async(req,res)=>{
   });
 })
 
-
+UserRouter.get("/all",async(req,res)=>{
+  try{
+    const data = await UserModel.find({role:"customer"})
+    res.send(data)
+  }
+  catch(e){
+    console.log(e);
+  }
+})
 
 module.exports = {
   UserRouter,

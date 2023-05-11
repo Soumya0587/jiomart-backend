@@ -6,6 +6,7 @@ const {UserRouter} = require("./routes/user.routes")
 const {CartRouter} = require("./routes/cart.routes")
 const {AddressRouter} = require("./routes/Address.routes")
 const {OrderRouter} = require("./routes/order.routes")
+const {WishlistRouter} = require("./routes/wishlist.routes")
 // const fileupload = require("express-fileupload");
 const { ClothingRouter } = require("./routes/clothing.routes");
 const app = express()
@@ -27,6 +28,7 @@ app.use("/clothing", ClothingRouter);
 app.use("/users/cart", CartRouter);
 app.use("/address",AddressRouter)
 app.use("/order",OrderRouter)
+app.use("/wishlist",WishlistRouter)
 
 // app.use(fileupload({
 //   useTempFiles:true

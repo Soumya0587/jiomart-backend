@@ -3,8 +3,9 @@ const {OrderModel} = require("../models/order.model");
 
 const OrderRouter = express.Router();
 
-OrderRouter.get("/", async (req, res) => {
-  const { userId } = req.body;
+OrderRouter.get("/:id", async (req, res) => {
+  
+  const { id } = req.params;
   const page = +req.query.page || 1;
   const limit = +req.query.limit || 10;
   const skip = (page - 1) * limit;
@@ -13,7 +14,7 @@ OrderRouter.get("/", async (req, res) => {
   const sortCriteria = req.query?.sort;
   const filterCriteria = req.query?.filter;
   try {
-    let data = OrderModel.find({ userId: userId });
+    let data = OrderModel.find({ userId: id });
 
     if (sortCriteria) {
       let arr = sortCriteria.split(":"); //splitting the sortCriteria String by : and set object in the rqd format
@@ -59,6 +60,15 @@ OrderRouter.get("/", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+OrderRouter.get("/",async(req,res)=>{
+  try{
+    const data = await OrderModel.find()
+    res.send(data)
+  }
+  catch(e){
+    console.log(e);
+  }
+})
 
 OrderRouter.post("/add", async (req, res) => {
   try {

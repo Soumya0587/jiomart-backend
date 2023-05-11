@@ -4,15 +4,15 @@ const GroceryRouter = express.Router();
 
 // get all grocery product 
 
-GroceryRouter.get("/all",async(req,res)=>{
-  try{
-    const data = await GroceryModel.find()
-    res.send(data)
-  }
-  catch(e){
-    console.log(e);
-  }
-})
+// GroceryRouter.get("/all",async(req,res)=>{
+//   try{
+//     const data = await GroceryModel.find()
+//     res.send(data)
+//   }
+//   catch(e){
+//     console.log(e);
+//   }
+// })
 
 // get by grocery product by ID
 
